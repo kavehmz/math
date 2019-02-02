@@ -1,4 +1,8 @@
 # math
+
+[![Go Lang](http://kavehmz.github.io/static/gopher/gopher-front.svg)](https://golang.org/)
+[![Build Status](https://travis-ci.org/kavehmz/math.svg?branch=master)](https://travis-ci.org/kavehmz/math)
+
 math formula server.
 
 This is a doodling for one way of serving apps in Go in a modular way.
