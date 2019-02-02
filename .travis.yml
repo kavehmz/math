@@ -2,5 +2,6 @@ language: go
 go:
   - tip
 script:
-    - go test -v -covermode=count -coverprofile=coverage.out -benchmem -bench . ./...
+    - make test
+    - make lint
     - go version
