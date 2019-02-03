@@ -1,7 +1,11 @@
 language: go
 go:
   - tip
+before_install:
+  - go get golang.org/x/tools/cmd/cover
+  - go get github.com/mattn/goveralls
 script:
     - make test
+    - $HOME/gopath/bin/goveralls -coverprofile=cover.out -service=travis-ci -repotoken $COVERALLS_TOKEN
     - make lint
     - go version
