@@ -2,6 +2,7 @@
 
 [![Go Lang](http://kavehmz.github.io/static/gopher/gopher-front.svg)](https://golang.org/)
 [![Build Status](https://travis-ci.org/kavehmz/math.svg?branch=master)](https://travis-ci.org/kavehmz/math)
+[![Coverage Status](https://coveralls.io/repos/github/kavehmz/math/badge.svg?branch=master)](https://coveralls.io/github/kavehmz/math?branch=master)
 
 math formula server.
 
