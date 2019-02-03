@@ -10,14 +10,14 @@ This is a doodling for one way of serving apps in Go in a modular way.
 
 It was mainly an exercise for 
 - using docker for different actions.
-- instrumenting different calls automatically
-- having a modular design that adding/removing a new call will only take one line change 
+- instrumenting different calls automatically.
+- having a modular design that adding/removing a new call will only take one line change. 
 ```go
 m.formulas["/math/add"] = formulate("add", &add.Add{}, ttl)
 ```
-- I intentionally did not use context. 
-- Two stage docker build for a Go code
-
+- caching the results from serve side.
+- I intentionally did not use context.
+- two stage docker build for a Go code.
 
 
 # Example
@@ -40,7 +40,7 @@ $ make serve
 docker run -d --rm --name kaveh-math -p 8080:8080 kaveh-math
 
 $ make example-factorial 
-curl -X POST -d '{"x":9}' 'http://127.0.0.1:8080/math/factorial';echo
+curl -X POST -d '{"x":9}' 'http://127.0.0.1:8080/math/factorial'
 362880
 
 # REQ TIMEOUT is 1s by default and can be adjusted
@@ -48,10 +48,10 @@ $ curl -X POST -d '{"x":900000000}' 'http://127.0.0.1:8080/math/factorial'
 Operation timedout
 
 $ make stop
-docker kill kaveh-math
+docker stop kaveh-math
 kaveh-math
 
-$ curl 'http://127.0.0.1:8080/metrics';echo
+$ curl 'http://127.0.0.1:8080/metrics'
 
 factorial_accesses 1.0
 factorial_cache_misses 1.0
