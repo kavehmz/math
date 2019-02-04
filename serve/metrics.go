@@ -10,6 +10,7 @@ type metrics struct {
 	errors      prometheus.Counter
 	cacheMisses prometheus.Counter
 	cacheSize   prometheus.Gauge
+	cacheTime   prometheus.Histogram
 	calcTime    prometheus.Histogram
 }
 
@@ -26,6 +27,10 @@ func register(name string) *metrics {
 	cacheSize := promauto.NewGauge(prometheus.GaugeOpts{
 		Name: name + "_cache_size",
 	})
+	cacheTime := promauto.NewHistogram(prometheus.HistogramOpts{
+		Name:    name + "_cache_time",
+		Buckets: prometheus.ExponentialBuckets(0.5e-3, 2, 14),
+	})
 	calcTime := promauto.NewHistogram(prometheus.HistogramOpts{
 		Name:    name + "_calculation_time",
 		Buckets: prometheus.ExponentialBuckets(0.5e-3, 2, 14),
@@ -36,6 +41,7 @@ func register(name string) *metrics {
 		errors:      errors,
 		cacheMisses: cacheMisses,
 		cacheSize:   cacheSize,
+		cacheTime:   cacheTime,
 		calcTime:    calcTime,
 	}
 }

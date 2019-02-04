@@ -40,16 +40,12 @@ func (m *MathHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if f, ok := m.formulas[path.Clean(r.URL.Path)]; ok {
-		f.metrics.accesses.Inc()
-
 		result, err := m.calculate(f, b)
 		if err == errTimeout {
-			f.metrics.errors.Inc()
 			httpError(w, err.Error(), http.StatusRequestTimeout)
 			return
 		}
 		if err != nil {
-			f.metrics.errors.Inc()
 			httpError(w, err.Error(), http.StatusInternalServerError)
 			return
 		}

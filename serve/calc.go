@@ -10,10 +10,22 @@ import (
 var errTimeout = errors.New(`Operation timedout`)
 
 func (m *MathHandler) calculate(f formula, b []byte) ([]byte, error) {
+	f.metrics.accesses.Inc()
+	timer := prometheus.NewTimer(f.metrics.calcTime)
+	defer timer.ObserveDuration()
+
+	var res []byte
+	var err error
 	if f.opt.Immutable() {
-		return m.calculateImmutable(f, b)
+		res, err = m.calculateImmutable(f, b)
+	} else {
+		res, err = m.calculatemutable(f, b)
+
 	}
-	return m.calculatemutable(f, b)
+	if err != nil {
+		f.metrics.errors.Inc()
+	}
+	return res, err
 }
 
 func (m *MathHandler) calculateImmutable(f formula, b []byte) ([]byte, error) {
