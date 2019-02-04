@@ -26,6 +26,7 @@ func TestMathHandler_ServeHTTP_app_err(t *testing.T) {
 		t.Error("Expected error", resp.StatusCode)
 	}
 }
+
 func TestMathHandler_ServeHTTP_timeout(t *testing.T) {
 	m := MathHandler{timeout: time.Nanosecond}
 	m.formulas = make(map[string]formula)
