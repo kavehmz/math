@@ -7,8 +7,7 @@ test:
 	go test -v -cover -coverprofile=cover.out ./...
 
 lint:
-	command -v gometalinter.v2 || (go get -u gopkg.in/alecthomas/gometalinter.v2 && ${GOPATH}/bin/gometalinter.v2 --install)
-	${GOPATH}/bin/gometalinter.v2 --vendor --deadline=180s --cyclo-over=15 --disable errcheck ./...
+	docker run --rm -v $${PWD}:/app -w /app golangci/golangci-lint golangci-lint run -v
 
 build:
 	docker build -t kaveh-math .
